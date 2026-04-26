@@ -91,7 +91,7 @@ public:
             }
         }
 
-        std::cout << "[DCELBuilder] Successfully built: " << mesh->faces.size() << " Faces, " 
+        std::cout << "[DCELBuilder] built: " << mesh->faces.size() << " Faces, " 
                   << mesh->halfEdges.size() << " Edges." << std::endl;
                   
         return mesh;
