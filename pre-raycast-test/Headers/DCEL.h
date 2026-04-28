@@ -12,41 +12,44 @@ class Face;
 class Vertex {
 public:
     sf::Vector2f position;
-    HalfEdge* incidentEdge = nullptr; 
+    HalfEdge* incidentEdge; 
+    
+    Vertex();
 };
 
-// A walkable room/polygon
+// cell in the navmesh
 class Face {
 public:
-    int id = 0;
-    int gridX = 0; // Needed for the Grid Builder to keep track of tiles
-    int gridY = 0; // Needed for the Grid Builder to keep track of tiles
-    sf::Vector2f centroid; // The exact center of the tile (crucial for AI pathfinding!)
-    HalfEdge* outerComponent = nullptr; 
+    int id;
+    int gridX; 
+    int gridY; 
+    sf::Vector2f centroid; 
+    HalfEdge* outerComponent; 
+    
+    Face();
 };
 
-// The core of the NavMesh.
+// Counter-Clockwise points connecting/stiching cells in the navmesh
 class HalfEdge {
 public:
-    Vertex* origin = nullptr;         
-    HalfEdge* twin = nullptr;         
-    Face* incidentFace = nullptr;     
-    HalfEdge* next = nullptr;         
-    HalfEdge* prev = nullptr;         
+    Vertex* origin;         
+    HalfEdge* twin;         
+    Face* incidentFace;     
+    HalfEdge* next;         
+    HalfEdge* prev;         
+    
+    HalfEdge();
 };
 
-// The wrapper class to hold and manage the memory of the mesh
+// wrapper class to hold vectors of all the DCEL components
 class DCEL {
 public:
     std::vector<Vertex*> vertices;
     std::vector<HalfEdge*> halfEdges;
     std::vector<Face*> faces;
 
-    ~DCEL() {
-        for (auto v : vertices) delete v;
-        for (auto e : halfEdges) delete e;
-        for (auto f : faces) delete f;
-    }
+    DCEL(); 
+    ~DCEL(); 
 };
 
 #endif
